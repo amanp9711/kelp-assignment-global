@@ -1,0 +1,36 @@
+<div class="search-bar">
+  <label for="searchInput">Search Users:</label>
+  <input type="text" id="searchInput" [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Search for something...">
+  <button [disabled] = "!searchQuery" class="search-button" (click)="search()">Search</button>
+  <button [disabled] = "!searchQuery" class="clear-search-button" (click)="clearSearch()">Clear Search</button>
+</div>
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Define table columns -->
+    <ng-container matColumnDef="login">
+      <th mat-header-cell *matHeaderCellDef>Username</th>
+      <td mat-cell *matCellDef="let element">{{ element.login }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="html_url">
+      <th mat-header-cell *matHeaderCellDef>Github Profile</th>
+      <td mat-cell *matCellDef="let element">
+        <a [href]="element.html_url" target="_blank">{{ element.html_url }}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="avatar_url">
+      <th mat-header-cell *matHeaderCellDef>Avatar</th>
+      <td mat-cell *matCellDef="let element">
+        <img [src]="element.avatar_url" alt="User Avatar" width="40" height="40">
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+  <div class="no-data-message" *ngIf="noDataFound">No data.</div>
+</div>
+
